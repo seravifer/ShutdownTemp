@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shutdown.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shutdown.Controller">
    <children>
-      <Slider fx:id="secSlideID" layoutX="66.0" layoutY="120.0" prefHeight="14.0" prefWidth="210.0" />
-      <Button fx:id="shudownID" layoutX="82.0" layoutY="181.0" mnemonicParsing="false" text="Shudown" />
-      <Button fx:id="stopID" layoutX="163.0" layoutY="181.0" mnemonicParsing="false" text="Stop" />
-      <TextField fx:id="minID" alignment="CENTER" layoutX="21.0" layoutY="73.0" prefHeight="25.0" prefWidth="35.0" text="0" />
-      <Slider fx:id="minSlideID" layoutX="66.0" layoutY="79.0" prefHeight="14.0" prefWidth="210.0" />
-      <TextField fx:id="secID" alignment="CENTER" layoutX="21.0" layoutY="114.0" prefHeight="25.0" prefWidth="35.0" text="0" />
-      <HBox alignment="CENTER" layoutX="68.0" layoutY="20.0" prefHeight="35.0" prefWidth="164.0" spacing="5.0">
+      <HBox alignment="CENTER" layoutX="68.0" layoutY="16.0" prefHeight="35.0" prefWidth="164.0" spacing="5.0">
          <children>
             <Label fx:id="minTextID" text="0m">
                <font>
-                  <Font name="System Bold" size="30.0" />
+                  <Font name="Roboto Light" size="36.0" />
                </font></Label>
             <Label fx:id="secTextID" text="0s">
                <font>
-                  <Font name="System Bold" size="30.0" />
+                  <Font name="Roboto Thin" size="36.0" />
                </font></Label>
          </children>
       </HBox>
-      <CheckBox fx:id="rebootID" layoutX="113.0" layoutY="148.0" mnemonicParsing="false" text="Reiniciar" />
+      <JFXToggleButton fx:id="rebootID" focusTraversable="false" layoutX="150.0" layoutY="157.0" prefHeight="56.0" prefWidth="122.0" text="Restart" />
+      <JFXButton fx:id="shudownID" buttonType="RAISED" focusTraversable="false" layoutX="65.0" layoutY="225.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="80.0" ripplerFill="#a1a1a1" style="-fx-background-color: white;" text="Shutdown" textAlignment="CENTER" />
+      <JFXButton fx:id="stopID" buttonType="RAISED" focusTraversable="false" layoutX="156.0" layoutY="225.0" prefHeight="25.0" prefWidth="80.0" ripplerFill="#a1a1a1" style="-fx-background-color: white;" text="Stop" textAlignment="CENTER" />
+      <Pane fx:id="slidersPaneID" layoutX="10.0" layoutY="70.0" prefHeight="88.0" prefWidth="275.0">
+         <children>
+            <TextField fx:id="minID" alignment="CENTER" focusTraversable="false" layoutX="11.0" layoutY="11.0" opacity="0.8" prefHeight="25.0" prefWidth="35.0" text="0" />
+            <TextField fx:id="secID" alignment="CENTER" focusTraversable="false" layoutX="11.0" layoutY="51.0" opacity="0.8" prefHeight="25.0" prefWidth="35.0" text="0" />
+            <JFXSlider fx:id="minSlideID" blockIncrement="1.0" focusTraversable="false" layoutX="51.0" layoutY="16.0" prefHeight="14.0" prefWidth="210.0" />
+            <JFXSlider fx:id="secSlideID" blockIncrement="1.0" focusTraversable="false" layoutX="51.0" layoutY="56.0" max="59.0" prefHeight="14.0" prefWidth="210.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="datePaneID" layoutX="10.0" layoutY="70.0" prefHeight="88.0" prefWidth="275.0" visible="false">
+         <children>
+            <JFXDatePicker fx:id="dateID" focusTraversable="false" layoutX="62.0" layoutY="3.0" />
+            <JFXTimePicker fx:id="timeID" layoutX="64.0" layoutY="51.0" />
+         </children>
+      </Pane>
+      <JFXToggleButton fx:id="selectTimeID" focusTraversable="false" layoutX="36.0" layoutY="157.0" prefHeight="56.0" prefWidth="122.0" text="Time" />
    </children>
 </Pane>

@@ -1,37 +1,27 @@
 package shutdown;
 
+import com.jfoenix.controls.*;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.*;
 
 public class Controller implements Initializable {
 
-    @FXML
-    private Slider secSlideID;
+    private static int time;
 
-    @FXML
-    private Slider minSlideID;
+    private static Timer timer;
 
-    @FXML
-    private Button shudownID;
-
-    @FXML
-    private Button stopID;
-
-    @FXML
-    private TextField minID;
-
-    @FXML
-    private TextField secID;
+    private boolean isDate = true;
 
     @FXML
     private Label minTextID;
@@ -40,16 +30,46 @@ public class Controller implements Initializable {
     private Label secTextID;
 
     @FXML
-    private CheckBox rebootID;
+    private JFXToggleButton rebootID;
 
-    private static int time;
-    private static Timer timer;
+    @FXML
+    private JFXButton shudownID;
+
+    @FXML
+    private JFXButton stopID;
+
+    @FXML
+    private Pane slidersPaneID;
+
+    @FXML
+    private TextField minID;
+
+    @FXML
+    private TextField secID;
+
+    @FXML
+    private JFXSlider minSlideID;
+
+    @FXML
+    private JFXSlider secSlideID;
+
+    @FXML
+    private Pane datePaneID;
+
+    @FXML
+    private JFXDatePicker dateID;
+
+    @FXML
+    private JFXTimePicker timeID;
+
+    @FXML
+    private JFXToggleButton selectTimeID;
 
     private void countdown() {
         if (time == 1)
             timer.cancel();
         --time;
-        int min = time/60;
+        int min = time / 60;
         int sec = time - min * 60;
         secTextID.setText(sec + "s");
         minTextID.setText(min + "m");
@@ -58,13 +78,17 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        secSlideID.setMax(59); // Limit slide to 59 seconds
+        secSlideID.setValue(0);
+        minSlideID.setValue(0);
+
+        dateID.setValue(LocalDate.now());
+        timeID.setValue(LocalTime.now());
 
         secSlideID.valueProperty().addListener((ob, o, n) -> {
             secTextID.textProperty().setValue(
-                String.valueOf((int) secSlideID.getValue()) + "s");
+                    String.valueOf((int) secSlideID.getValue()) + "s");
             secID.textProperty().setValue(
-                String.valueOf((int) secSlideID.getValue()));
+                    String.valueOf((int) secSlideID.getValue()));
         });
 
         minSlideID.valueProperty().addListener((ob, o, n) -> {
@@ -98,24 +122,33 @@ public class Controller implements Initializable {
         });
 
         shudownID.setOnAction(event -> {
-            time = (int) (secSlideID.getValue() + minSlideID.getValue() * 60);
-            Runtime runtime = Runtime.getRuntime();
-            try {
-                if (rebootID.isSelected()) {
-                    runtime.exec("shutdown -r -t " + String.valueOf(time));
-                } else {
-                    runtime.exec("shutdown -s -t " + String.valueOf(time));
-                }
-                shudownID.setDisable(true);
-                timer = new Timer();
-                timer.scheduleAtFixedRate(new TimerTask() {
-                    public void run() {
-                        Platform.runLater(() ->  countdown());
-                    }
-                },1000,1000);
+            if (isDate) {
+                int actualDate = ((int) LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toEpochSecond());
+                int selectedDate = ((int) dateID.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond());
+                int actualTime = LocalTime.now().toSecondOfDay();
+                int selectedTime = timeID.getValue().toSecondOfDay();
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                time = selectedDate + selectedTime - actualDate - actualTime;
+            } else {
+                time = (int) (secSlideID.getValue() + minSlideID.getValue() * 60);
+                Runtime runtime = Runtime.getRuntime();
+                try {
+                    if (rebootID.isSelected()) {
+                        runtime.exec("shutdown -r -t " + String.valueOf(time));
+                    } else {
+                        runtime.exec("shutdown -s -t " + String.valueOf(time));
+                    }
+                    shudownID.setDisable(true);
+                    timer = new Timer();
+                    timer.scheduleAtFixedRate(new TimerTask() {
+                        public void run() {
+                            Platform.runLater(() -> countdown());
+                        }
+                    }, 1000, 1000);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -135,6 +168,27 @@ public class Controller implements Initializable {
                 e.printStackTrace();
             }
         });
+
+        rebootID.setOnAction(evento -> {
+            if (rebootID.isSelected()) {
+                shudownID.setText("Restart");
+            } else {
+                shudownID.setText("Shutdown");
+            }
+        });
+
+        selectTimeID.setOnAction(event -> {
+            if (selectTimeID.isSelected()) {
+                isDate = true;
+                datePaneID.setVisible(true);
+                slidersPaneID.setVisible(false);
+            } else {
+                isDate = false;
+                datePaneID.setVisible(false);
+                slidersPaneID.setVisible(true);
+            }
+        });
+
     }
 
 }
