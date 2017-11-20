@@ -25,9 +25,15 @@
                </font></Label>
          </children>
       </HBox>
-      <JFXToggleButton fx:id="rebootID" focusTraversable="false" layoutX="150.0" layoutY="157.0" prefHeight="56.0" prefWidth="122.0" text="Restart" />
-      <JFXButton fx:id="shudownID" buttonType="RAISED" focusTraversable="false" layoutX="65.0" layoutY="225.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="80.0" ripplerFill="#a1a1a1" style="-fx-background-color: white;" text="Shutdown" textAlignment="CENTER" />
-      <JFXButton fx:id="stopID" buttonType="RAISED" focusTraversable="false" layoutX="156.0" layoutY="225.0" prefHeight="25.0" prefWidth="80.0" ripplerFill="#a1a1a1" style="-fx-background-color: white;" text="Stop" textAlignment="CENTER" />
+      <JFXToggleButton fx:id="rebootID" focusTraversable="false" layoutX="150.0" layoutY="159.0" prefHeight="56.0" prefWidth="122.0" text="Restart" />
+      <JFXButton fx:id="shudownID" buttonType="RAISED" focusTraversable="false" layoutX="65.0" layoutY="230.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="80.0" ripplerFill="#34b97f" style="-fx-background-color: #009688;" text="Shutdown" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="stopID" buttonType="RAISED" focusTraversable="false" layoutX="156.0" layoutY="230.0" prefHeight="25.0" prefWidth="80.0" ripplerFill="#e17e7e" style="-fx-background-color: #8e0600;" text="Stop" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font></JFXButton>
       <Pane fx:id="slidersPaneID" layoutX="10.0" layoutY="70.0" prefHeight="88.0" prefWidth="275.0">
          <children>
             <TextField fx:id="minID" alignment="CENTER" focusTraversable="false" layoutX="11.0" layoutY="11.0" opacity="0.8" prefHeight="25.0" prefWidth="35.0" text="0" />
@@ -42,6 +48,6 @@
             <JFXTimePicker fx:id="timeID" layoutX="64.0" layoutY="51.0" />
          </children>
       </Pane>
-      <JFXToggleButton fx:id="selectTimeID" focusTraversable="false" layoutX="36.0" layoutY="157.0" prefHeight="56.0" prefWidth="122.0" text="Time" />
+      <JFXToggleButton fx:id="selectTimeID" focusTraversable="false" layoutX="36.0" layoutY="159.0" prefHeight="56.0" prefWidth="122.0" text="Time" />
    </children>
 </Pane>

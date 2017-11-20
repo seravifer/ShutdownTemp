@@ -13,7 +13,9 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
@@ -64,16 +66,6 @@ public class Controller implements Initializable {
 
     @FXML
     private JFXToggleButton selectTimeID;
-
-    private void countdown() {
-        if (time == 1)
-            timer.cancel();
-        --time;
-        int min = time / 60;
-        int sec = time - min * 60;
-        secTextID.setText(sec + "s");
-        minTextID.setText(min + "m");
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -131,6 +123,7 @@ public class Controller implements Initializable {
                 time = selectedDate + selectedTime - actualDate - actualTime;
             } else {
                 time = (int) (secSlideID.getValue() + minSlideID.getValue() * 60);
+            }
                 Runtime runtime = Runtime.getRuntime();
                 try {
                     if (rebootID.isSelected()) {
@@ -149,7 +142,6 @@ public class Controller implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
         });
 
         stopID.setOnAction(event -> {
@@ -162,7 +154,7 @@ public class Controller implements Initializable {
                     secID.setText(0 + "");
                     minID.setText(0 + "");
                 } catch (NullPointerException ignored) {
-                    System.out.println("The program does not know of any scheduled shutdown tasks.");
+                    System.err.println("The program doesn't know of any scheduled shutdown tasks.");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -189,6 +181,16 @@ public class Controller implements Initializable {
             }
         });
 
+    }
+
+    private void countdown() {
+        if (time == 1)
+            timer.cancel();
+        --time;
+        int min = time / 60;
+        int sec = time - min * 60;
+        secTextID.setText(sec + "s");
+        minTextID.setText(min + "m");
     }
 
 }

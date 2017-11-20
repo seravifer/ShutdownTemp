@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ShutdownTemp:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ShutdownTemp_jar</output-path>
+    <root id="archive" name="ShutdownTemp.jar">
+      <element id="module-output" name="ShutdownTemp" />
+    </root>
+  </artifact>
+</component>
